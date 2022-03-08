@@ -1,0 +1,154 @@
+<?php get_header();?>
+
+  <!--main-->
+  <main class="l-top-main">
+
+
+
+
+<!--  
+    <?php if ( is_object_in_term($post->ID, 'man',array( 'man1', 'man2' )) ): ?>
+    //名前の表示
+    <?php echo get_post_meta($post->ID, 'mane', true); ?>
+
+    <?php endif; ?>
+    -->
+
+
+    <?php
+  $taxonomy_name = 'custom_taxonomy'; // タクソノミーのスラッグ名を入れる
+  $post_type = 'man'; // カスタム投稿のスラッグ名を入れる
+  $args = array(
+    'order'        => 'DESC',
+  );
+  $taxonomys = get_terms( $taxonomy_name, $args);
+ 
+  if(!is_wp_error($taxonomys) && count($taxonomys)):
+    foreach($taxonomys as $taxonomy):
+    $tax_posts = get_posts( array(
+        'post_type' => $post_type,
+        'posts_per_page' => -1, // 表示させたい記事数
+        'tax_query' => array(
+          array(
+            'taxonomy' => $taxonomy_name,
+            'terms' => array( $taxonomy->slug ),
+            'field' => 'slug',
+            'include_children' => false, //子タクソノミーを含める
+          )
+        )
+    ));
+    if( $tax_posts ) :
+ ?>
+ <h2><?php echo esc_html($taxonomy->name); ?></h2>
+ <ul>
+  <?php foreach($tax_posts as $tax_post): ?>
+  <li>
+    <a href="<?php echo get_permalink($tax_post->ID); ?>"><?php echo get_the_title($tax_post->ID); ?></a>
+  </li>
+  <?php endforeach; wp_reset_postdata(); ?>
+ </ul>
+  <?php
+  endif;
+  endforeach;
+  ?>
+  <?php else: ?>
+  <p>投稿はありません</p>
+<?php endif; ?>
+
+
+
+
+
+
+
+
+    <!--トップに戻るボタン-->
+    <btn class="u-js-topbtn"><i class="fas fa-chevron-up"></i></btn>
+
+    <!--サポート-->
+    <section>
+      <div class="l-top-main__support u-js-initial1">
+        <h2 class="l-top-main__support-title">実務経験者がコーダーになるためにサポート</h2>
+        <p class="l-top-main__support-content">コーダーになりたいけど何を勉強すれば実務ができるかが分からない人が多くいるはずです。<br>そんな人達を実務に繋げるためのサイトです。<br>このサイトで実務をするためには何が必要かを知りましょう。</p>
+      </div>
+    </section>
+
+    <!--自己紹介-->
+    <secition>
+      <div class="l-top-main__introduce u-js-initial2">
+        <h2 class="l-top-main__introduce-title">簡単な自己紹介</h2>
+        <p class="l-top-main__introduce-content">はじめまして、サイト運営の責任者のjonioです。<br>このサイトは複数人のコーダーとデザイナーで運営しています。<br>私は2019年の6月からコーダーになるための勉強を始めて2020年の3月からコーダーとして実務を開始しました。<br>現在はサイト作成とWEBアプリを作るWEBエンジニアです。<br>私が勉強を始めたときは何を勉強すればいいかが全く分からず手探りで色々勉強しました。<br>その時の大変だった思いがあってこれからコーダーになりたい人が最短の勉強でコーダーになるための情報を伝えることができるサイトを作りました。</p>
+      </div>
+    </section>
+
+    <!--学習内容-->
+    <section>
+      <div class="l-top-main__study">
+        <h2 class="l-top-main__study-title">学習内容</h2>
+        <div class="l-top-main__study-wrap">
+          <a href="" class="l-top-main__study-section1 u-js-initial3">
+            <img class="l-top-main__study-img1" src="<?php echo get_template_directory_uri();?>/images/top-img2.png" alt="">
+            <p class="l-top-main__study-fadein1">模写の練習はここから</p>
+            <div class="l-top-main__study-section-wrap1">
+              <h2 class="l-top-main__study-title1">[模写の練習]</h2>
+              <p class="l-top-main__study-content1">コーダーはコーディングができないと話になりません。このセクションでは私が作ったデザインカンプを元にコーディングの練習をしてもらいます。</p>
+            </div>
+          </a>
+          <a href="" class="l-top-main__study-section2 u-js-initial4">
+            <img class="l-top-main__study-img2" src="<?php echo get_template_directory_uri();?>/images/top-img3.png" alt="">
+            <p class="l-top-main__study-fadein2">習得することはここから</p>
+            <div class="l-top-main__study-section-wrap2">
+              <h2 class="l-top-main__study-title2">[習得すること]</h2>
+              <p class="l-top-main__study-content2">コーダーはコーディングができないと話になりません。このセクションでは私が作ったデザインカンプを元にコーディングの練習をしてもらいます。</p>
+            </div>
+          </a>
+          <a href="" class="l-top-main__study-section3 u-js-initial5">
+            <img class="l-top-main__study-img3" src="<?php echo get_template_directory_uri();?>/images/top-img4.png" alt="">
+            <p class="l-top-main__study-fadein3">実務はここから</p>
+            <div class="l-top-main__study-section-wrap3">
+              <h2 class="l-top-main__study-title3">[実務]</h2>
+              <p class="l-top-main__study-content3">コーダーはコーディングができないと話になりません。このセクションでは私が作ったデザインカンプを元にコーディングの練習をしてもらいます。</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!--Q&A-->
+    <section>
+      <div class="l-top-main__question-answer u-js-initial6">
+        <h2 class="l-top-main__question-answer-title">Q&A</h2>
+        <div class="l-top-main__question-answer-wrap">
+          <ul>
+            <li class="l-top-main__question-answer-q">Q.有料ですか？ <i class="fas fa-chevron-down"></i></li>
+            <li class="l-top-main__question-answer-a">A.完全無料です</li>
+            <li class="l-top-main__question-answer-q">Q.模写で分からない所があったらどうしよう？ <i class="fas fa-chevron-down"></i></li>
+            <li class="l-top-main__question-answer-a">A.お問い合わせから私に質問してください</li>
+            <li class="l-top-main__question-answer-q">Q.0から勉強する人でも大丈夫？ <i class="fas fa-chevron-down"></i></li>
+            <li class="l-top-main__question-answer-a">A.ProgateのHTML&CSSコースを何周か勉強してからの方がいいです</li>
+            <li class="l-top-main__question-answer-q">Q.模写の添削をしてくれますか？ <i class="fas fa-chevron-down"></i></li>
+            <li class="l-top-main__question-answer-a">A.希望する人が多くいたら考えます</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!--Twitter-->
+    <section>
+      <div class="l-top-main__twitter u-js-initial7">
+        <h2 class="l-top-main__twitter-title">Follow me</h2>
+        <p class="l-top-main__twitter-content">毎日実務関連でツイートしています。よかったらフォローお願いします</p>
+        <img src="<?php echo get_template_directory_uri();?>/images/top-img5.png" alt="">
+      </div>
+    </section>
+
+    <!--YouTube-->
+    <section>
+      <div class="l-top-main__youtube u-js-initial8">
+        <h2 class="l-top-main__youtube-title">YouTube</h2>
+        <p class="l-top-main__youtube-content">不定期でYouTubeの動画を配信しています、WEB関係の動画を配信していますのでよかったら見てください</p>
+        <img src="<?php echo get_template_directory_uri();?>/images/top-img6.png" alt="">
+      </div>
+    </section>
+  </main>
+<?php get_footer();?>
